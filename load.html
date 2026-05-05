@@ -9,10 +9,10 @@ html, body {
     padding: 0;
     height: 100%;
     overflow: hidden;
-    background-color: black;
+    background: black;
+    font-family: Arial, sans-serif;
 }
 
-/* centered container */
 .wrapper {
     position: absolute;
     top: 50%;
@@ -22,18 +22,33 @@ html, body {
     text-align: center;
 }
 
-/* your banner */
 .banner {
     max-width: 70%;
     height: auto;
 }
 
-/* optional bottom text */
-.loading {
-    margin-top: 20px;
-    color: #4da3ff;
-    font-size: 14px;
-    letter-spacing: 3px;
+.loading-text {
+    margin-top: 22px;
+    color: #ffffff;
+    font-size: 13px;
+    letter-spacing: 4px;
+}
+
+.progress-wrap {
+    margin: 16px auto 0 auto;
+    width: 420px;
+    max-width: 60%;
+    height: 8px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(77,163,255,0.45);
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background: #2f8cff;
+    transition: width 0.25s linear;
 }
 </style>
 </head>
@@ -42,11 +57,38 @@ html, body {
 
 <div class="wrapper">
     <img src="cinematicbanner3.png" class="banner">
-    
-    <div class="loading">
+
+    <div class="loading-text" id="statusText">
         LOADING CINEMATIC CLONE WARS
     </div>
+
+    <div class="progress-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
 </div>
+
+<script>
+let progress = 0;
+
+function SetStatusChanged(status) {
+    document.getElementById("statusText").innerText = status;
+}
+
+function SetFilesTotal(total) {
+    window.filesTotal = total;
+}
+
+function SetFilesNeeded(needed) {
+    if (!window.filesTotal || window.filesTotal <= 0) return;
+
+    progress = ((window.filesTotal - needed) / window.filesTotal) * 100;
+    document.getElementById("progressBar").style.width = progress + "%";
+}
+
+function GameDetails(servername, serverurl, mapname, maxplayers, steamid, gamemode) {
+    document.getElementById("statusText").innerText = "LOADING " + mapname.toUpperCase();
+}
+</script>
 
 </body>
 </html>
