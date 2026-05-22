@@ -1,94 +1,183 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cinematic Imperial Occupation Loading Screen</title>
 
 <style>
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
-    background: black;
-    font-family: Arial, sans-serif;
-}
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
 
-.wrapper {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    text-align: center;
-}
+    html, body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #020202;
+        font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+        color: white;
+    }
 
-.banner {
-    max-width: 70%;
-    height: auto;
-}
+    body {
+        background-image:
+            linear-gradient(rgba(0,0,0,0.10), rgba(0,0,0,0.35)),
+            url("background.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
 
-.loading-text {
-    margin-top: 22px;
-    color: #ffffff;
-    font-size: 13px;
-    letter-spacing: 4px;
-}
+    .overlay {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background:
+            radial-gradient(circle at center, rgba(255,255,255,0.02), transparent 45%),
+            linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0.35));
+    }
 
-.progress-wrap {
-    margin: 16px auto 0 auto;
-    width: 420px;
-    max-width: 60%;
-    height: 8px;
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(77,163,255,0.45);
-    overflow: hidden;
-}
+    .loader-wrap {
+        position: fixed;
+        left: 50%;
+        bottom: 9.5%;
+        transform: translateX(-50%);
+        width: min(46vw, 760px);
+        text-align: center;
+    }
 
-.progress-bar {
-    width: 0%;
-    height: 100%;
-    background: #2f8cff;
-    transition: width 0.25s linear;
-}
+    .loading-text {
+        font-family: "Arial Narrow", Arial, sans-serif;
+        font-size: clamp(14px, 1.05vw, 22px);
+        letter-spacing: 9px;
+        font-weight: 700;
+        color: #f2f2f2;
+        text-shadow: 0 0 12px rgba(255,255,255,0.35);
+        margin-bottom: 16px;
+    }
+
+    .segments {
+        display: grid;
+        grid-template-columns: repeat(16, 1fr);
+        gap: 6px;
+        width: 100%;
+        height: 21px;
+        padding: 2px;
+    }
+
+    .segment {
+        border: 1px solid rgba(255,255,255,0.45);
+        background: rgba(0,0,0,0.45);
+        box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+        transform: skewX(-7deg);
+        overflow: hidden;
+    }
+
+    .segment.active {
+        border-color: rgba(210, 16, 24, 0.95);
+        background:
+            linear-gradient(90deg, rgba(120,0,0,0.9), rgba(220,18,28,1), rgba(120,0,0,0.9));
+        box-shadow:
+            0 0 14px rgba(210, 16, 24, 0.55),
+            inset 0 0 8px rgba(255,255,255,0.18);
+    }
+
+    .percent {
+        margin-top: 13px;
+        font-family: "Arial Narrow", Arial, sans-serif;
+        letter-spacing: 7px;
+        font-size: clamp(14px, 1vw, 20px);
+        color: #c90f19;
+        text-shadow: 0 0 10px rgba(210, 16, 24, 0.75);
+    }
+
+    .status {
+        position: fixed;
+        left: 28px;
+        bottom: 24px;
+        font-family: Arial, sans-serif;
+        font-size: 11px;
+        letter-spacing: 3px;
+        color: rgba(255,255,255,0.52);
+        text-transform: uppercase;
+    }
+
+    .corner-line {
+        position: fixed;
+        height: 1px;
+        width: 17vw;
+        background: linear-gradient(90deg, rgba(190,0,10,0.0), rgba(190,0,10,0.9));
+        bottom: 6.5%;
+        opacity: 0.7;
+    }
+
+    .corner-line.left {
+        left: 4%;
+    }
+
+    .corner-line.right {
+        right: 4%;
+        transform: scaleX(-1);
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 0.78; }
+        50% { opacity: 1; }
+    }
+
+    .segment.active:nth-child(odd) {
+        animation: pulse 1.6s infinite ease-in-out;
+    }
 </style>
 </head>
 
 <body>
+    <div class="overlay"></div>
 
-<div class="wrapper">
-    <img src="cinematicbanner3.png" class="banner">
+    <div class="loader-wrap">
+        <div class="loading-text">LOADING...</div>
 
-    <div class="loading-text" id="statusText">
-        LOADING CINEMATIC CLONE WARS
+        <div class="segments" id="segments"></div>
+
+        <div class="percent" id="percent">56%</div>
     </div>
 
-    <div class="progress-wrap">
-        <div class="progress-bar" id="progressBar"></div>
-    </div>
-</div>
+    <div class="corner-line left"></div>
+    <div class="corner-line right"></div>
+
+    <div class="status">ESTABLISHING IMPERIAL CONNECTION</div>
 
 <script>
-let progress = 0;
+    const segmentBox = document.getElementById("segments");
+    const percentText = document.getElementById("percent");
 
-function SetStatusChanged(status) {
-    document.getElementById("statusText").innerText = status;
-}
+    const TOTAL_SEGMENTS = 16;
+    let percent = 56;
 
-function SetFilesTotal(total) {
-    window.filesTotal = total;
-}
+    for (let i = 0; i < TOTAL_SEGMENTS; i++) {
+        const div = document.createElement("div");
+        div.className = "segment";
+        segmentBox.appendChild(div);
+    }
 
-function SetFilesNeeded(needed) {
-    if (!window.filesTotal || window.filesTotal <= 0) return;
+    function renderProgress(value) {
+        const activeCount = Math.round((value / 100) * TOTAL_SEGMENTS);
+        document.querySelectorAll(".segment").forEach((segment, index) => {
+            segment.classList.toggle("active", index < activeCount);
+        });
+        percentText.textContent = Math.round(value) + "%";
+    }
 
-    progress = ((window.filesTotal - needed) / window.filesTotal) * 100;
-    document.getElementById("progressBar").style.width = progress + "%";
-}
+    renderProgress(percent);
 
-function GameDetails(servername, serverurl, mapname, maxplayers, steamid, gamemode) {
-    document.getElementById("statusText").innerText = "LOADING " + mapname.toUpperCase();
-}
+    // Demo animation. Remove this block if your loading system controls progress.
+    setInterval(() => {
+        percent += Math.random() * 4;
+        if (percent > 100) percent = 7;
+        renderProgress(percent);
+    }, 850);
 </script>
-
 </body>
 </html>
