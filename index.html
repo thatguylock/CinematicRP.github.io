@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Star Wars: Resurgence</title>
 
   <style>
@@ -19,7 +20,8 @@
       user-select: none;
     }
 
-    html, body {
+    html,
+    body {
       width: 100%;
       height: 100%;
       margin: 0;
@@ -30,10 +32,15 @@
     }
 
     body {
-      background:
+      background-image:
         linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.62)),
         linear-gradient(90deg, rgba(0,0,0,.68), rgba(0,0,0,.10) 50%, rgba(0,0,0,.68)),
-        url("background.png") center center / cover no-repeat;
+        url("https://thatguylock.github.io/CinematicRP.github.io/background.png?v=2");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-color: #000;
     }
 
     .center {
@@ -63,7 +70,7 @@
     }
 
     @keyframes float {
-      0%, 100% { transform: translateY(0); }
+      0%,100% { transform: translateY(0); }
       50% { transform: translateY(-6px); }
     }
 
@@ -82,7 +89,7 @@
       line-height: .95;
       letter-spacing: .06em;
       text-transform: uppercase;
-      text-shadow: 0 0 24px rgba(120, 190, 255, .35);
+      text-shadow: 0 0 24px rgba(120,190,255,.35);
     }
 
     .subtitle {
@@ -97,7 +104,12 @@
     .line {
       height: 1px;
       margin: 32px 0 24px;
-      background: linear-gradient(90deg, transparent, rgba(160, 210, 255, .45), transparent);
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(160,210,255,.45),
+        transparent
+      );
     }
 
     .status {
@@ -121,7 +133,12 @@
     .fill {
       height: 100%;
       width: 38%;
-      background: linear-gradient(90deg, #246bc0, #58a9ff, #b7e0ff);
+      background: linear-gradient(
+        90deg,
+        #246bc0,
+        #58a9ff,
+        #b7e0ff
+      );
       box-shadow: 0 0 18px rgba(88,169,255,.85);
       animation: load 3.8s ease-in-out infinite;
     }
@@ -151,33 +168,47 @@
       text-transform: uppercase;
     }
   </style>
+
 </head>
 
 <body>
   <main class="center">
     <section class="panel">
-      <img class="logo" src="resurgence.png" alt="Resurgence Logo" />
 
-      <div class="eyebrow">Star Wars</div>
-      <h1>Resurgence</h1>
-      <div class="subtitle">Imperial Occupation Roleplay</div>
+```
+  <img
+    class="logo"
+    src="https://thatguylock.github.io/CinematicRP.github.io/resurgence.png?v=2"
+    alt="Resurgence Logo"
+  >
 
-      <div class="line"></div>
+  <div class="eyebrow">Star Wars</div>
+  <h1>Resurgence</h1>
+  <div class="subtitle">Imperial Occupation Roleplay</div>
 
-      <div class="status">
-        <span id="statusText">Loading server assets</span>
-        <span id="percent">38%</span>
-      </div>
+  <div class="line"></div>
 
-      <div class="bar">
-        <div class="fill" id="fill"></div>
-      </div>
+  <div class="status">
+    <span id="statusText">Loading server assets</span>
+    <span id="percent">38%</span>
+  </div>
 
-      <div class="tip" id="tip">Welcome to the capital. Identification must remain visible.</div>
-    </section>
+  <div class="bar">
+    <div class="fill" id="fill"></div>
+  </div>
+
+  <div class="tip" id="tip">
+    Welcome to the capital. Identification must remain visible.
+  </div>
+
+</section>
+```
+
   </main>
 
-  <div class="footer">Imperial Network // Secure Asset Load</div>
+  <div class="footer">
+    Imperial Network // Secure Asset Load
+  </div>
 
   <script>
     const tips = [
@@ -189,15 +220,21 @@
     ];
 
     let currentTip = 0;
+
     setInterval(() => {
       currentTip = (currentTip + 1) % tips.length;
       document.getElementById("tip").textContent = tips[currentTip];
     }, 5200);
 
     let p = 12;
+
     setInterval(() => {
       p += Math.floor(Math.random() * 7) + 1;
-      if (p > 96) p = 21;
+
+      if (p > 96) {
+        p = 21;
+      }
+
       document.getElementById("percent").textContent = p + "%";
       document.getElementById("fill").style.width = p + "%";
     }, 850);
@@ -207,16 +244,20 @@
     }
 
     function SetStatusChanged(status) {
-      if (status) document.getElementById("statusText").textContent = status;
+      if (status) {
+        document.getElementById("statusText").textContent = status;
+      }
     }
 
     function SetFilesTotal(total) {}
 
     function SetFilesNeeded(needed) {
       const done = Math.max(0, 100 - Math.min(100, needed));
+
       document.getElementById("percent").textContent = done + "%";
       document.getElementById("fill").style.width = done + "%";
     }
   </script>
+
 </body>
 </html>
