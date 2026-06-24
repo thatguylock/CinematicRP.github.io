@@ -1,241 +1,212 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Star Wars: Resurgence</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Star Wars: Resurgence</title>
 
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap");
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap');
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      user-select: none;
-    }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      font-family: "Oswald", Arial, sans-serif;
-      background: #000;
-      color: #f2f7ff;
-    }
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:'Oswald',sans-serif;
+    color:white;
+    background:#000;
+}
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background:
-        linear-gradient(180deg, rgba(0,0,0,0.10), rgba(0,0,0,0.72)),
-        linear-gradient(90deg, rgba(0,0,0,0.72), rgba(0,0,0,0.08), rgba(0,0,0,0.72)),
-        url("background.png");
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
-      z-index: -3;
-    }
+.background{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-3;
+}
 
-    body::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(circle at center, rgba(88,169,255,0.10), transparent 45%),
-        rgba(0,0,0,0.18);
-      z-index: -2;
-    }
+.overlay{
+    position:fixed;
+    inset:0;
+    background:
+        linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.65)),
+        linear-gradient(90deg,rgba(0,0,0,.55),transparent,rgba(0,0,0,.55));
+    z-index:-2;
+}
 
-    .wrap {
-      width: 100%;
-      height: 100%;
-      display: grid;
-      place-items: center;
-      padding: 40px;
-    }
+.center{
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:40px;
+}
 
-    .panel {
-      width: min(680px, 88vw);
-      padding: 46px 54px 42px;
-      text-align: center;
-      background: rgba(4, 8, 15, 0.66);
-      border: 1px solid rgba(150, 205, 255, 0.35);
-      box-shadow: 0 0 70px rgba(30, 120, 220, 0.28);
-    }
+.panel{
+    width:min(700px,90vw);
+    background:rgba(3,8,15,.72);
+    border:1px solid rgba(120,180,255,.25);
+    padding:50px;
+    text-align:center;
+    box-shadow:0 0 60px rgba(88,169,255,.20);
+}
 
-    .logo {
-      width: 190px;
-      height: 190px;
-      object-fit: contain;
-      margin-bottom: 18px;
-      filter: drop-shadow(0 0 22px rgba(110, 180, 255, 0.55));
-      animation: float 5s ease-in-out infinite;
-    }
+.logo{
+    width:180px;
+    margin-bottom:20px;
+    filter:drop-shadow(0 0 20px rgba(88,169,255,.5));
+}
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-7px); }
-    }
+.top{
+    color:#9fd0ff;
+    letter-spacing:.5em;
+    text-transform:uppercase;
+    font-size:15px;
+}
 
-    .small {
-      color: #9fd0ff;
-      font-size: 17px;
-      font-weight: 300;
-      letter-spacing: 0.45em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
+h1{
+    font-size:84px;
+    line-height:1;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    text-shadow:0 0 25px rgba(88,169,255,.35);
+}
 
-    h1 {
-      font-size: clamp(58px, 6vw, 92px);
-      line-height: 0.95;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-shadow: 0 0 28px rgba(120, 190, 255, 0.42);
-    }
+.sub{
+    margin-top:10px;
+    font-size:20px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color:rgba(255,255,255,.8);
+}
 
-    .sub {
-      margin-top: 16px;
-      font-size: 21px;
-      font-weight: 300;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(242,247,255,0.84);
-    }
+.line{
+    height:1px;
+    margin:30px 0;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
+}
 
-    .line {
-      height: 1px;
-      margin: 34px 0 26px;
-      background: linear-gradient(90deg, transparent, rgba(150,205,255,0.55), transparent);
-    }
+.status{
+    display:flex;
+    justify-content:space-between;
+    text-transform:uppercase;
+    margin-bottom:10px;
+}
 
-    .status {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 11px;
-      font-size: 17px;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-      color: rgba(242,247,255,0.86);
-    }
+.bar{
+    width:100%;
+    height:14px;
+    border:1px solid rgba(120,180,255,.45);
+    padding:2px;
+}
 
-    .bar {
-      width: 100%;
-      height: 15px;
-      padding: 3px;
-      border: 1px solid rgba(150,205,255,0.48);
-      background: rgba(0,0,0,0.48);
-    }
+.fill{
+    height:100%;
+    width:35%;
+    background:linear-gradient(90deg,#2a6ec4,#58a9ff,#c5e6ff);
+    box-shadow:0 0 18px rgba(88,169,255,.8);
+}
 
-    .fill {
-      height: 100%;
-      width: 35%;
-      background: linear-gradient(90deg, #1f63b2, #58a9ff, #c7e7ff);
-      box-shadow: 0 0 20px rgba(88,169,255,0.9);
-      animation: load 4s ease-in-out infinite;
-    }
+.tip{
+    margin-top:20px;
+    color:rgba(255,255,255,.7);
+}
 
-    @keyframes load {
-      0% { width: 14%; }
-      50% { width: 88%; }
-      100% { width: 14%; }
-    }
+.footer{
+    position:fixed;
+    bottom:25px;
+    left:25px;
+    color:rgba(255,255,255,.5);
+    letter-spacing:.15em;
+    text-transform:uppercase;
+}
+</style>
 
-    .tip {
-      margin-top: 24px;
-      min-height: 28px;
-      font-size: 17px;
-      font-weight: 300;
-      letter-spacing: 0.06em;
-      color: rgba(242,247,255,0.74);
-    }
-
-    .footer {
-      position: fixed;
-      left: 32px;
-      bottom: 24px;
-      font-size: 14px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(242,247,255,0.48);
-    }
-  </style>
 </head>
 
 <body>
-  <main class="wrap">
-    <section class="panel">
-      <img class="logo" src="resurgence.png" alt="Resurgence Logo">
 
-      <div class="small">Star Wars</div>
-      <h1>Resurgence</h1>
-      <div class="sub">Imperial Occupation Roleplay</div>
+<img class="background" src="background.png" alt="Background">
 
-      <div class="line"></div>
+<div class="overlay"></div>
 
-      <div class="status">
+<div class="center">
+    <div class="panel">
+
+```
+    <img class="logo" src="resurgence.png" alt="Resurgence">
+
+    <div class="top">Star Wars</div>
+    <h1>Resurgence</h1>
+    <div class="sub">Imperial Occupation Roleplay</div>
+
+    <div class="line"></div>
+
+    <div class="status">
         <span id="statusText">Loading server assets</span>
         <span id="percent">35%</span>
-      </div>
+    </div>
 
-      <div class="bar">
+    <div class="bar">
         <div class="fill" id="fill"></div>
-      </div>
+    </div>
 
-      <div class="tip" id="tip">Welcome to the capital. Identification must remain visible.</div>
-    </section>
-  </main>
+    <div class="tip" id="tip">
+        Welcome to the capital. Identification must remain visible.
+    </div>
 
-  <div class="footer">Imperial Network // Secure Asset Load</div>
+</div>
+```
 
-  <script>
-    const tips = [
-      "Welcome to the capital. Identification must remain visible.",
-      "Remain in character. Keep comms clean. Follow staff instructions.",
-      "Respect checkpoints, chain of command, and sector law.",
-      "Loading assets, models, materials, and server content.",
-      "Imperial authority is absolute. Civil order is mandatory."
-    ];
+</div>
 
-    let currentTip = 0;
-    let percent = 35;
+<div class="footer">
+    Imperial Network // Secure Asset Load
+</div>
 
-    setInterval(function () {
-      currentTip = (currentTip + 1) % tips.length;
-      document.getElementById("tip").textContent = tips[currentTip];
-    }, 5200);
+<script>
+const tips = [
+"Welcome to the capital. Identification must remain visible.",
+"Remain in character. Keep comms clean. Follow staff instructions.",
+"Respect checkpoints, chain of command, and sector law.",
+"Loading assets, models, materials, and server content.",
+"Imperial authority is absolute. Civil order is mandatory."
+];
 
-    setInterval(function () {
-      percent += Math.floor(Math.random() * 6) + 1;
+let tip = 0;
 
-      if (percent > 96) {
-        percent = 22;
-      }
+setInterval(()=>{
+    tip=(tip+1)%tips.length;
+    document.getElementById("tip").textContent=tips[tip];
+},5000);
 
-      document.getElementById("percent").textContent = percent + "%";
-      document.getElementById("fill").style.width = percent + "%";
-    }, 900);
+function GameDetails(servername,serverurl,mapname){
+    document.getElementById("statusText").textContent="Loading "+mapname;
+}
 
-    function GameDetails(servername, serverurl, mapname, maxplayers, steamid, gamemode) {
-      document.getElementById("statusText").textContent = "Loading " + mapname;
+function SetStatusChanged(status){
+    if(status){
+        document.getElementById("statusText").textContent=status;
     }
+}
 
-    function SetStatusChanged(status) {
-      if (status) {
-        document.getElementById("statusText").textContent = status;
-      }
-    }
+function SetFilesTotal(total){}
 
-    function SetFilesTotal(total) {}
+function SetFilesNeeded(needed){
+    const done=Math.max(0,100-Math.min(100,needed));
+    document.getElementById("percent").textContent=done+"%";
+    document.getElementById("fill").style.width=done+"%";
+}
+</script>
 
-    function SetFilesNeeded(needed) {
-      const done = Math.max(0, 100 - Math.min(100, needed));
-      document.getElementById("percent").textContent = done + "%";
-      document.getElementById("fill").style.width = done + "%";
-    }
-  </script>
 </body>
 </html>
