@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -20,8 +19,8 @@ html,body{
     height:100%;
     overflow:hidden;
     font-family:'Oswald',sans-serif;
-    color:white;
     background:#000;
+    color:#fff;
 }
 
 .background{
@@ -30,130 +29,142 @@ html,body{
     width:100%;
     height:100%;
     object-fit:cover;
-    z-index:-3;
 }
 
 .overlay{
     position:fixed;
     inset:0;
     background:
-        linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.65)),
-        linear-gradient(90deg,rgba(0,0,0,.55),transparent,rgba(0,0,0,.55));
-    z-index:-2;
+        linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.35) 40%, rgba(0,0,0,.15) 100%);
 }
 
-.center{
-    width:100%;
-    height:100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:40px;
-}
-
-.panel{
-    width:min(700px,90vw);
-    background:rgba(3,8,15,.72);
-    border:1px solid rgba(120,180,255,.25);
-    padding:50px;
+.topbar{
+    position:absolute;
+    top:40px;
+    left:50%;
+    transform:translateX(-50%);
     text-align:center;
-    box-shadow:0 0 60px rgba(88,169,255,.20);
+}
+
+.topbar h1{
+    font-size:90px;
+    letter-spacing:10px;
+    text-transform:uppercase;
+    text-shadow:0 0 30px rgba(255,255,255,.2);
+}
+
+.topbar p{
+    font-size:20px;
+    letter-spacing:8px;
+    text-transform:uppercase;
+    color:#cfe7ff;
 }
 
 .logo{
-    width:180px;
+    width:120px;
     margin-bottom:20px;
-    filter:drop-shadow(0 0 20px rgba(88,169,255,.5));
+    filter:drop-shadow(0 0 20px rgba(120,180,255,.6));
 }
 
-.top{
-    color:#9fd0ff;
-    letter-spacing:.5em;
+.loading-panel{
+    position:absolute;
+    left:60px;
+    bottom:60px;
+    width:600px;
+}
+
+.loading-title{
+    font-size:28px;
+    letter-spacing:4px;
     text-transform:uppercase;
-    font-size:15px;
-}
-
-h1{
-    font-size:84px;
-    line-height:1;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    text-shadow:0 0 25px rgba(88,169,255,.35);
-}
-
-.sub{
-    margin-top:10px;
-    font-size:20px;
-    letter-spacing:.15em;
-    text-transform:uppercase;
-    color:rgba(255,255,255,.8);
-}
-
-.line{
-    height:1px;
-    margin:30px 0;
-    background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
+    margin-bottom:20px;
 }
 
 .status{
     display:flex;
     justify-content:space-between;
-    text-transform:uppercase;
-    margin-bottom:10px;
+    margin-bottom:12px;
+    font-size:18px;
+    letter-spacing:2px;
 }
 
 .bar{
     width:100%;
-    height:14px;
-    border:1px solid rgba(120,180,255,.45);
-    padding:2px;
+    height:16px;
+    border:1px solid rgba(130,190,255,.5);
+    background:rgba(0,0,0,.5);
+    padding:3px;
 }
 
 .fill{
     height:100%;
-    width:35%;
-    background:linear-gradient(90deg,#2a6ec4,#58a9ff,#c5e6ff);
-    box-shadow:0 0 18px rgba(88,169,255,.8);
+    width:15%;
+    background:linear-gradient(90deg,#1f5cb5,#58a9ff,#d8efff);
+    box-shadow:0 0 18px rgba(88,169,255,.9);
 }
 
 .tip{
-    margin-top:20px;
-    color:rgba(255,255,255,.7);
+    margin-top:18px;
+    color:rgba(255,255,255,.75);
+    font-size:18px;
 }
 
-.footer{
-    position:fixed;
-    bottom:25px;
-    left:25px;
-    color:rgba(255,255,255,.5);
-    letter-spacing:.15em;
+.server-info{
+    position:absolute;
+    right:60px;
+    bottom:60px;
+    text-align:right;
+}
+
+.server-info .big{
+    font-size:38px;
+    letter-spacing:4px;
     text-transform:uppercase;
 }
-</style>
 
+.server-info .small{
+    font-size:18px;
+    color:#b8d9ff;
+    letter-spacing:3px;
+    text-transform:uppercase;
+}
+
+.scanline{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:
+    repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,.02) 0px,
+        rgba(255,255,255,.02) 1px,
+        transparent 2px,
+        transparent 4px
+    );
+}
+</style>
 </head>
 
 <body>
 
-<img class="background" src="background.png" alt="Background">
-
+<img src="background.png" class="background">
 <div class="overlay"></div>
 
-<div class="center">
-    <div class="panel">
-
-```
-    <img class="logo" src="resurgence.png" alt="Resurgence">
-
-    <div class="top">Star Wars</div>
+<div class="topbar">
+    <img src="resurgence.png" class="logo">
+    <p>Star Wars</p>
     <h1>Resurgence</h1>
-    <div class="sub">Imperial Occupation Roleplay</div>
+</div>
 
-    <div class="line"></div>
+<div class="loading-panel">
+
+    <div class="loading-title">
+        Establishing HoloNet Connection
+    </div>
 
     <div class="status">
-        <span id="statusText">Loading server assets</span>
-        <span id="percent">35%</span>
+        <span id="statusText">Loading server assets...</span>
+        <span id="percent">15%</span>
     </div>
 
     <div class="bar">
@@ -161,25 +172,25 @@ h1{
     </div>
 
     <div class="tip" id="tip">
-        Welcome to the capital. Identification must remain visible.
+        Welcome to Daiyu. Identification must remain visible.
     </div>
 
 </div>
-```
 
+<div class="server-info">
+    <div class="big">Imperial Occupation</div>
+    <div class="small">Roleplay Server</div>
 </div>
 
-<div class="footer">
-    Imperial Network // Secure Asset Load
-</div>
+<div class="scanline"></div>
 
 <script>
 const tips = [
-"Welcome to the capital. Identification must remain visible.",
-"Remain in character. Keep comms clean. Follow staff instructions.",
-"Respect checkpoints, chain of command, and sector law.",
-"Loading assets, models, materials, and server content.",
-"Imperial authority is absolute. Civil order is mandatory."
+"Welcome to Daiyu. Identification must remain visible.",
+"Imperial authority is absolute.",
+"Remain in character at all times.",
+"Respect checkpoints and security personnel.",
+"Loading models, materials and server content."
 ];
 
 let tip = 0;
@@ -189,7 +200,7 @@ setInterval(()=>{
     document.getElementById("tip").textContent=tips[tip];
 },5000);
 
-function GameDetails(servername,serverurl,mapname){
+function GameDetails(servername,serverurl,mapname,maxplayers,steamid,gamemode){
     document.getElementById("statusText").textContent="Loading "+mapname;
 }
 
@@ -202,7 +213,7 @@ function SetStatusChanged(status){
 function SetFilesTotal(total){}
 
 function SetFilesNeeded(needed){
-    const done=Math.max(0,100-Math.min(100,needed));
+    let done=Math.max(0,100-Math.min(100,needed));
     document.getElementById("percent").textContent=done+"%";
     document.getElementById("fill").style.width=done+"%";
 }
