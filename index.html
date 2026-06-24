@@ -2,220 +2,269 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Star Wars: Resurgence</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap");
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
 html,body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    font-family:'Oswald',sans-serif;
-    background:#000;
-    color:#fff;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#000;
+  font-family:"Oswald",Arial,sans-serif;
+  color:white;
 }
 
-.background{
-    position:fixed;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
+.bg{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:0;
 }
 
-.overlay{
-    position:fixed;
-    inset:0;
-    background:
-        linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.35) 40%, rgba(0,0,0,.15) 100%);
+.dark{
+  position:fixed;
+  inset:0;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.82),rgba(0,0,0,.28),rgba(0,0,0,.78)),
+    linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.55));
+  z-index:1;
 }
 
-.topbar{
-    position:absolute;
-    top:40px;
-    left:50%;
-    transform:translateX(-50%);
-    text-align:center;
+.scan{
+  position:fixed;
+  inset:0;
+  background:repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,.035) 0px,
+    rgba(255,255,255,.035) 1px,
+    transparent 2px,
+    transparent 5px
+  );
+  opacity:.35;
+  z-index:2;
+  pointer-events:none;
 }
 
-.topbar h1{
-    font-size:90px;
-    letter-spacing:10px;
-    text-transform:uppercase;
-    text-shadow:0 0 30px rgba(255,255,255,.2);
+.frame{
+  position:fixed;
+  inset:22px;
+  border:1px solid rgba(88,169,255,.65);
+  z-index:3;
+  pointer-events:none;
+  box-shadow:inset 0 0 45px rgba(88,169,255,.12);
 }
 
-.topbar p{
-    font-size:20px;
-    letter-spacing:8px;
-    text-transform:uppercase;
-    color:#cfe7ff;
+.title{
+  position:absolute;
+  top:60px;
+  left:55px;
+  z-index:4;
 }
 
 .logo{
-    width:120px;
-    margin-bottom:20px;
-    filter:drop-shadow(0 0 20px rgba(120,180,255,.6));
+  width:125px;
+  filter:drop-shadow(0 0 22px rgba(88,169,255,.85));
+  margin-bottom:22px;
 }
 
-.loading-panel{
-    position:absolute;
-    left:60px;
-    bottom:60px;
-    width:600px;
+.kicker{
+  color:#9fd0ff;
+  font-size:24px;
+  letter-spacing:14px;
+  text-transform:uppercase;
+  margin-left:5px;
 }
 
-.loading-title{
-    font-size:28px;
-    letter-spacing:4px;
-    text-transform:uppercase;
-    margin-bottom:20px;
+h1{
+  font-size:84px;
+  line-height:.95;
+  letter-spacing:10px;
+  text-transform:uppercase;
+  text-shadow:0 0 30px rgba(180,220,255,.5);
+}
+
+.subtitle{
+  margin-top:10px;
+  color:#58a9ff;
+  font-size:21px;
+  letter-spacing:10px;
+  text-transform:uppercase;
+}
+
+.loadbox{
+  position:absolute;
+  left:60px;
+  bottom:75px;
+  width:660px;
+  padding:28px;
+  z-index:4;
+  background:rgba(0,8,18,.70);
+  border:1px solid rgba(88,169,255,.65);
+  box-shadow:0 0 35px rgba(88,169,255,.25);
+}
+
+.loadtitle{
+  color:#9fd0ff;
+  font-size:30px;
+  letter-spacing:6px;
+  text-transform:uppercase;
+  margin-bottom:24px;
 }
 
 .status{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:12px;
-    font-size:18px;
-    letter-spacing:2px;
+  display:flex;
+  justify-content:space-between;
+  font-size:20px;
+  letter-spacing:1px;
+  margin-bottom:10px;
 }
 
 .bar{
-    width:100%;
-    height:16px;
-    border:1px solid rgba(130,190,255,.5);
-    background:rgba(0,0,0,.5);
-    padding:3px;
+  width:100%;
+  height:18px;
+  padding:3px;
+  border:1px solid rgba(88,169,255,.75);
+  background:rgba(0,0,0,.65);
 }
 
 .fill{
-    height:100%;
-    width:15%;
-    background:linear-gradient(90deg,#1f5cb5,#58a9ff,#d8efff);
-    box-shadow:0 0 18px rgba(88,169,255,.9);
+  height:100%;
+  width:15%;
+  background:linear-gradient(90deg,#1e63b8,#58a9ff,#d7efff);
+  box-shadow:0 0 22px rgba(88,169,255,.95);
+  transition:width .25s linear;
 }
 
 .tip{
-    margin-top:18px;
-    color:rgba(255,255,255,.75);
-    font-size:18px;
+  margin-top:22px;
+  font-size:18px;
+  color:rgba(255,255,255,.75);
+  letter-spacing:1px;
 }
 
-.server-info{
-    position:absolute;
-    right:60px;
-    bottom:60px;
-    text-align:right;
+.identity{
+  position:absolute;
+  right:65px;
+  bottom:90px;
+  z-index:4;
+  min-width:420px;
+  padding:25px 34px;
+  background:rgba(0,8,18,.65);
+  border-left:2px solid rgba(255,45,45,.7);
+  border-bottom:1px solid rgba(88,169,255,.45);
+  text-align:right;
 }
 
-.server-info .big{
-    font-size:38px;
-    letter-spacing:4px;
-    text-transform:uppercase;
+.identity .big{
+  font-size:38px;
+  letter-spacing:7px;
+  text-transform:uppercase;
 }
 
-.server-info .small{
-    font-size:18px;
-    color:#b8d9ff;
-    letter-spacing:3px;
-    text-transform:uppercase;
+.identity .small{
+  color:#58a9ff;
+  font-size:20px;
+  letter-spacing:6px;
+  text-transform:uppercase;
 }
 
-.scanline{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    background:
-    repeating-linear-gradient(
-        to bottom,
-        rgba(255,255,255,.02) 0px,
-        rgba(255,255,255,.02) 1px,
-        transparent 2px,
-        transparent 4px
-    );
+.topright{
+  position:absolute;
+  top:45px;
+  right:55px;
+  z-index:4;
+  text-align:right;
+  color:#9fd0ff;
+  font-size:14px;
+  letter-spacing:3px;
+  text-transform:uppercase;
 }
 </style>
 </head>
 
 <body>
 
-<img src="background.png" class="background">
-<div class="overlay"></div>
+<img class="bg" src="background.png" alt="">
+<div class="dark"></div>
+<div class="scan"></div>
+<div class="frame"></div>
 
-<div class="topbar">
-    <img src="resurgence.png" class="logo">
-    <p>Star Wars</p>
-    <h1>Resurgence</h1>
+<div class="topright">
+  Secure Link<br>
+  Online ●
 </div>
 
-<div class="loading-panel">
+<section class="title">
+  <img class="logo" src="resurgence.png" alt="">
+  <div class="kicker">Star Wars</div>
+  <h1>Resurgence</h1>
+  <div class="subtitle">Imperial Occupation Roleplay</div>
+</section>
 
-    <div class="loading-title">
-        Establishing HoloNet Connection
-    </div>
+<section class="loadbox">
+  <div class="loadtitle">Establishing HoloNet Connection</div>
 
-    <div class="status">
-        <span id="statusText">Loading server assets...</span>
-        <span id="percent">15%</span>
-    </div>
+  <div class="status">
+    <span id="statusText">Loading server assets...</span>
+    <span id="percent">15%</span>
+  </div>
 
-    <div class="bar">
-        <div class="fill" id="fill"></div>
-    </div>
+  <div class="bar">
+    <div class="fill" id="fill"></div>
+  </div>
 
-    <div class="tip" id="tip">
-        Welcome to Daiyu. Identification must remain visible.
-    </div>
+  <div class="tip" id="tip">Loading models, materials and server content.</div>
+</section>
 
-</div>
-
-<div class="server-info">
-    <div class="big">Imperial Occupation</div>
-    <div class="small">Roleplay Server</div>
-</div>
-
-<div class="scanline"></div>
+<section class="identity">
+  <div class="big">Imperial Occupation</div>
+  <div class="small">Roleplay Server</div>
+</section>
 
 <script>
-const tips = [
-"Welcome to Daiyu. Identification must remain visible.",
-"Imperial authority is absolute.",
-"Remain in character at all times.",
-"Respect checkpoints and security personnel.",
-"Loading models, materials and server content."
+const tips=[
+  "Loading models, materials and server content.",
+  "Welcome to Daiyu. Identification must remain visible.",
+  "Imperial authority is absolute.",
+  "Remain in character. Keep comms clean.",
+  "Respect checkpoints, chain of command, and sector law."
 ];
 
-let tip = 0;
+let tipIndex=0;
+let fakePercent=15;
 
-setInterval(()=>{
-    tip=(tip+1)%tips.length;
-    document.getElementById("tip").textContent=tips[tip];
+setInterval(function(){
+  tipIndex=(tipIndex+1)%tips.length;
+  document.getElementById("tip").textContent=tips[tipIndex];
 },5000);
 
+setInterval(function(){
+  fakePercent+=Math.floor(Math.random()*5)+1;
+  if(fakePercent>96){fakePercent=18;}
+  document.getElementById("percent").textContent=fakePercent+"%";
+  document.getElementById("fill").style.width=fakePercent+"%";
+},900);
+
 function GameDetails(servername,serverurl,mapname,maxplayers,steamid,gamemode){
-    document.getElementById("statusText").textContent="Loading "+mapname;
+  document.getElementById("statusText").textContent="Loading "+mapname;
 }
 
 function SetStatusChanged(status){
-    if(status){
-        document.getElementById("statusText").textContent=status;
-    }
+  if(status){document.getElementById("statusText").textContent=status;}
 }
 
 function SetFilesTotal(total){}
 
 function SetFilesNeeded(needed){
-    let done=Math.max(0,100-Math.min(100,needed));
-    document.getElementById("percent").textContent=done+"%";
-    document.getElementById("fill").style.width=done+"%";
+  const done=Math.max(0,100-Math.min(100,needed));
+  document.getElementById("percent").textContent=done+"%";
+  document.getElementById("fill").style.width=done+"%";
 }
 </script>
 
