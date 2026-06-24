@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Star Wars: Resurgence</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --blue: #58a9ff;
+      --blue-soft: #9fd0ff;
+      --white: #f2f7ff;
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      font-family: "Oswald", Arial, sans-serif;
+      color: var(--white);
+      background: #000;
+    }
+
+    body {
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.62)),
+        linear-gradient(90deg, rgba(0,0,0,.68), rgba(0,0,0,.10) 50%, rgba(0,0,0,.68)),
+        url("background.png") center center / cover no-repeat;
+    }
+
+    .center {
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 40px;
+    }
+
+    .panel {
+      width: min(640px, 86vw);
+      padding: 44px 52px 38px;
+      text-align: center;
+      background: rgba(5, 10, 18, .48);
+      border: 1px solid rgba(160, 210, 255, .28);
+      box-shadow: 0 0 55px rgba(45, 125, 215, .22);
+      backdrop-filter: blur(7px);
+    }
+
+    .logo {
+      width: 205px;
+      height: 205px;
+      object-fit: contain;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 0 20px rgba(120, 190, 255, .52));
+      animation: float 5s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .eyebrow {
+      margin-bottom: 4px;
+      color: var(--blue-soft);
+      font-size: 16px;
+      font-weight: 300;
+      letter-spacing: .42em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(58px, 6vw, 86px);
+      line-height: .95;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      text-shadow: 0 0 24px rgba(120, 190, 255, .35);
+    }
+
+    .subtitle {
+      margin-top: 14px;
+      color: rgba(242,247,255,.82);
+      font-size: 20px;
+      font-weight: 300;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .line {
+      height: 1px;
+      margin: 32px 0 24px;
+      background: linear-gradient(90deg, transparent, rgba(160, 210, 255, .45), transparent);
+    }
+
+    .status {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 11px;
+      font-size: 17px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(242,247,255,.82);
+    }
+
+    .bar {
+      width: 100%;
+      height: 14px;
+      padding: 3px;
+      border: 1px solid rgba(160,210,255,.42);
+      background: rgba(0,0,0,.38);
+    }
+
+    .fill {
+      height: 100%;
+      width: 38%;
+      background: linear-gradient(90deg, #246bc0, #58a9ff, #b7e0ff);
+      box-shadow: 0 0 18px rgba(88,169,255,.85);
+      animation: load 3.8s ease-in-out infinite;
+    }
+
+    @keyframes load {
+      0% { width: 12%; }
+      50% { width: 86%; }
+      100% { width: 12%; }
+    }
+
+    .tip {
+      margin-top: 22px;
+      min-height: 28px;
+      color: rgba(242,247,255,.72);
+      font-size: 17px;
+      font-weight: 300;
+      letter-spacing: .06em;
+    }
+
+    .footer {
+      position: fixed;
+      left: 34px;
+      bottom: 26px;
+      color: rgba(242,247,255,.46);
+      font-size: 14px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="center">
+    <section class="panel">
+      <img class="logo" src="resurgence.png" alt="Resurgence Logo" />
+
+      <div class="eyebrow">Star Wars</div>
+      <h1>Resurgence</h1>
+      <div class="subtitle">Imperial Occupation Roleplay</div>
+
+      <div class="line"></div>
+
+      <div class="status">
+        <span id="statusText">Loading server assets</span>
+        <span id="percent">38%</span>
+      </div>
+
+      <div class="bar">
+        <div class="fill" id="fill"></div>
+      </div>
+
+      <div class="tip" id="tip">Welcome to the capital. Identification must remain visible.</div>
+    </section>
+  </main>
+
+  <div class="footer">Imperial Network // Secure Asset Load</div>
+
+  <script>
+    const tips = [
+      "Welcome to the capital. Identification must remain visible.",
+      "Remain in character. Keep comms clean. Follow staff instructions.",
+      "Respect checkpoints, chain of command, and sector law.",
+      "Loading assets, models, materials, and server content.",
+      "Imperial authority is absolute. Civil order is mandatory."
+    ];
+
+    let currentTip = 0;
+    setInterval(() => {
+      currentTip = (currentTip + 1) % tips.length;
+      document.getElementById("tip").textContent = tips[currentTip];
+    }, 5200);
+
+    let p = 12;
+    setInterval(() => {
+      p += Math.floor(Math.random() * 7) + 1;
+      if (p > 96) p = 21;
+      document.getElementById("percent").textContent = p + "%";
+      document.getElementById("fill").style.width = p + "%";
+    }, 850);
+
+    function GameDetails(servername, serverurl, mapname, maxplayers, steamid, gamemode) {
+      document.getElementById("statusText").textContent = "Loading " + mapname;
+    }
+
+    function SetStatusChanged(status) {
+      if (status) document.getElementById("statusText").textContent = status;
+    }
+
+    function SetFilesTotal(total) {}
+
+    function SetFilesNeeded(needed) {
+      const done = Math.max(0, 100 - Math.min(100, needed));
+      document.getElementById("percent").textContent = done + "%";
+      document.getElementById("fill").style.width = done + "%";
+    }
+  </script>
+</body>
+</html>
