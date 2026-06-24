@@ -7,142 +7,147 @@
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap");
 
-*{margin:0;padding:0;box-sizing:border-box}
-
-html,body{
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  background:#000;
-  font-family:"Oswald",Arial,sans-serif;
-  color:#fff;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
 }
 
-.bg{
-  position:fixed;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  z-index:0;
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  font-family: "Oswald", Arial, sans-serif;
+  color: #fff;
 }
 
-.shade{
-  position:fixed;
-  inset:0;
+.bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.shadow {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
   background:
-    linear-gradient(90deg,rgba(0,0,0,.72),rgba(0,0,0,.18),rgba(0,0,0,.45)),
-    linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.48));
-  z-index:1;
+    linear-gradient(90deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.72) 22%, rgba(0,0,0,.22) 55%, rgba(0,0,0,.05) 100%),
+    linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.25) 70%, rgba(0,0,0,.70) 100%);
 }
 
-.content{
-  position:relative;
-  z-index:2;
-  height:100%;
-  padding:70px;
+.content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  padding-left: 68px;
+  padding-top: 130px;
 }
 
-.header{
-  display:flex;
-  align-items:center;
-  gap:24px;
+.logo {
+  width: 135px;
+  height: 135px;
+  object-fit: contain;
+  margin-bottom: 46px;
+  filter: brightness(1.6);
 }
 
-.logo{
-  width:95px;
-  height:95px;
-  object-fit:contain;
-  opacity:.9;
+.kicker {
+  color: #d8ecff;
+  font-size: 25px;
+  letter-spacing: 14px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
 }
 
-.title small{
-  display:block;
-  color:#b9d9ff;
-  letter-spacing:8px;
-  font-size:18px;
-  text-transform:uppercase;
-  margin-bottom:8px;
+h1 {
+  font-size: 92px;
+  line-height: .92;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-shadow: 0 0 18px rgba(255,255,255,.22);
 }
 
-.title h1{
-  font-size:72px;
-  line-height:.9;
-  letter-spacing:8px;
-  text-transform:uppercase;
-  font-weight:700;
+.rule {
+  width: 520px;
+  height: 1px;
+  margin-top: 38px;
+  background: rgba(255,255,255,.38);
 }
 
-.title p{
-  margin-top:10px;
-  font-size:18px;
-  letter-spacing:5px;
-  color:rgba(255,255,255,.75);
-  text-transform:uppercase;
+.loading {
+  position: absolute;
+  left: 68px;
+  bottom: 88px;
+  width: 560px;
 }
 
-.loading{
-  position:absolute;
-  left:70px;
-  bottom:80px;
-  width:560px;
+.loading-title {
+  font-size: 28px;
+  letter-spacing: 16px;
+  text-transform: uppercase;
+  margin-bottom: 22px;
 }
 
-.loading h2{
-  font-size:28px;
-  letter-spacing:5px;
-  text-transform:uppercase;
-  margin-bottom:22px;
-  font-weight:500;
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 11px;
+  font-size: 20px;
 }
 
-.row{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:10px;
-  font-size:18px;
-  letter-spacing:1px;
+.percent {
+  font-size: 22px;
 }
 
-.bar{
-  width:100%;
-  height:10px;
-  background:rgba(255,255,255,.18);
+.bar {
+  width: 100%;
+  height: 12px;
+  border: 1px solid rgba(255,255,255,.42);
+  background: rgba(0,0,0,.45);
 }
 
-.fill{
-  height:100%;
-  width:16%;
-  background:#74b7ff;
-  box-shadow:0 0 12px rgba(116,183,255,.75);
+.fill {
+  height: 100%;
+  width: 23%;
+  background: #e8f5ff;
+  box-shadow: 0 0 10px rgba(255,255,255,.55);
+  transition: width .25s linear;
 }
 
-.tip{
-  margin-top:18px;
-  font-size:17px;
-  color:rgba(255,255,255,.68);
-  letter-spacing:1px;
+.tip {
+  margin-top: 22px;
+  font-size: 16px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.72);
 }
 
-.right{
-  position:absolute;
-  right:70px;
-  bottom:80px;
-  text-align:right;
+.tip b {
+  color: #ffffff;
+  letter-spacing: 3px;
 }
 
-.right h3{
-  font-size:34px;
-  letter-spacing:6px;
-  text-transform:uppercase;
-}
-
-.right p{
-  margin-top:8px;
-  font-size:18px;
-  letter-spacing:5px;
-  color:#b9d9ff;
-  text-transform:uppercase;
+.scan {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: .12;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,.18) 0px,
+    rgba(255,255,255,.18) 1px,
+    transparent 2px,
+    transparent 5px
+  );
 }
 </style>
 </head>
@@ -150,79 +155,72 @@ html,body{
 <body>
 
 <img class="bg" src="background.png" alt="">
-<div class="shade"></div>
+<div class="shadow"></div>
 
-<div class="content">
+<main class="content">
+  <img class="logo" src="resurgence.png" alt="">
 
-  <div class="header">
-    <img class="logo" src="resurgence.png" alt="">
-    <div class="title">
-      <small>Star Wars</small>
-      <h1>Resurgence</h1>
-      <p>Imperial Occupation Roleplay</p>
-    </div>
-  </div>
+  <div class="kicker">Star Wars</div>
+  <h1>Resurgence</h1>
+  <div class="rule"></div>
 
-  <div class="loading">
-    <h2>Joining Server</h2>
+  <section class="loading">
+    <div class="loading-title">Loading</div>
 
     <div class="row">
       <span id="statusText">Loading server assets...</span>
-      <span id="percent">16%</span>
+      <span class="percent" id="percent">23%</span>
     </div>
 
     <div class="bar">
       <div class="fill" id="fill"></div>
     </div>
 
-    <div class="tip" id="tip">Remain in character at all times.</div>
-  </div>
+    <div class="tip" id="tip"><b>Tip:</b> Remain in character at all times.</div>
+  </section>
+</main>
 
-  <div class="right">
-    <h3>Imperial Occupation</h3>
-    <p>Roleplay Server</p>
-  </div>
-
-</div>
+<div class="scan"></div>
 
 <script>
-const tips=[
+const tips = [
   "Remain in character at all times.",
-  "Respect checkpoints and sector law.",
-  "Follow staff instructions.",
-  "Loading server content.",
-  "Welcome to Daiyu."
+  "Respect staff instructions.",
+  "Keep comms clean.",
+  "Follow server rules.",
+  "Have fun and stay in character."
 ];
 
-let tipIndex=0;
-let fakePercent=16;
+let tipIndex = 0;
+let fakePercent = 23;
 
-setInterval(function(){
-  tipIndex=(tipIndex+1)%tips.length;
-  document.getElementById("tip").textContent=tips[tipIndex];
-},5000);
+setInterval(function() {
+  tipIndex = (tipIndex + 1) % tips.length;
+  document.getElementById("tip").innerHTML = "<b>Tip:</b> " + tips[tipIndex];
+}, 5000);
 
-setInterval(function(){
-  fakePercent+=Math.floor(Math.random()*5)+1;
-  if(fakePercent>96){fakePercent=18;}
-  document.getElementById("percent").textContent=fakePercent+"%";
-  document.getElementById("fill").style.width=fakePercent+"%";
-},900);
+setInterval(function() {
+  fakePercent += Math.floor(Math.random() * 5) + 1;
+  if (fakePercent > 96) fakePercent = 23;
 
-function GameDetails(servername,serverurl,mapname,maxplayers,steamid,gamemode){
-  document.getElementById("statusText").textContent="Loading "+mapname;
+  document.getElementById("percent").textContent = fakePercent + "%";
+  document.getElementById("fill").style.width = fakePercent + "%";
+}, 900);
+
+function GameDetails(servername, serverurl, mapname, maxplayers, steamid, gamemode) {
+  document.getElementById("statusText").textContent = "Loading " + mapname;
 }
 
-function SetStatusChanged(status){
-  if(status){document.getElementById("statusText").textContent=status;}
+function SetStatusChanged(status) {
+  if (status) document.getElementById("statusText").textContent = status;
 }
 
-function SetFilesTotal(total){}
+function SetFilesTotal(total) {}
 
-function SetFilesNeeded(needed){
-  const done=Math.max(0,100-Math.min(100,needed));
-  document.getElementById("percent").textContent=done+"%";
-  document.getElementById("fill").style.width=done+"%";
+function SetFilesNeeded(needed) {
+  const done = Math.max(0, 100 - Math.min(100, needed));
+  document.getElementById("percent").textContent = done + "%";
+  document.getElementById("fill").style.width = done + "%";
 }
 </script>
 
